@@ -12,7 +12,7 @@ def get_fruityvice_data(this_fruit_choice):
 
 def get_fruit_load_list():
   with my_cnx.cursor() as my_cur:
-    my_cur.execute("SELECT FRUIT_NAME from fruit_load_list")
+    my_cur.execute("SELECT FRUIT_NAME from PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST")
     return my_cur.fetchall()
   
  
@@ -45,13 +45,15 @@ try:
 except URLError as e:
   streamlit.error
 
+streamlit.stop()
+
 streamlit.header("Fruit Load List Contains:")
+
 if streamlit.button('Get Fruit load list contains:'):    
   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
   my_data_rows = get_fruit_load_list() 
   streamlit.dataframe(my_data_rows)
 
-streamlit.stop()
   
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 streamlit.write('Thanks for adding ', add_my_fruit)
