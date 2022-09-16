@@ -7,14 +7,7 @@ from urllib.error import URLError
 def get_fruityvice_data(this_fruit_choice):
   fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)
   fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-  return fruityvice_normalized
-
-
-def get_fruit_load_list():
-  with my_cnx.cursor() as my_cur:
-    my_cur.execute("SELECT FRUIT_NAME from PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST")
-    return my_cur.fetchall()
-  
+  return fruityvice_normalized  
  
 streamlit.title('My parents new healthy diner')
 streamlit.header('Breakfast Menu')
@@ -46,6 +39,12 @@ except URLError as e:
   streamlit.error
 
 streamlit.stop()
+
+def get_fruit_load_list():
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute("SELECT FRUIT_NAME from PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST")
+    return my_cur.fetchall()
+
 
 streamlit.header("Fruit Load List Contains:")
 
